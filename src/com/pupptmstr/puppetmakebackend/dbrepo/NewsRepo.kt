@@ -2,12 +2,9 @@ package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
 import com.pupptmstr.puppetmakebackend.models.News
-import com.pupptmstr.puppetmakebackend.models.Project
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.time.LocalDate
-import java.util.*
 
 class NewsRepo {
     val DB_URL = "jdbc:postgresql://localhost:5432/puppetmakedb"

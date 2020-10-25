@@ -14,7 +14,7 @@ fun Route.teammatesController(teammatesRepo: TeammatesRepo) {
             call.respond(teammatesRepo.getAll())
         }
 
-        get("/teammate/one") {
+        get("/one") {
             val id = call.request.queryParameters["id"]?.toLong()
             if (id != null)
                 call.respond(teammatesRepo.getById(id))

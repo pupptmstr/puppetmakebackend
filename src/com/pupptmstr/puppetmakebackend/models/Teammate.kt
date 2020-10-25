@@ -14,7 +14,7 @@ data class Teammate(
     val surname: String,
 
     @SerializedName("nickname")
-    val nickname: String,
+    val nickname: String?,
 
     @SerializedName("hired_at")
     val hiredAt: LocalDate,
@@ -23,7 +23,7 @@ data class Teammate(
     val globalRole: String,
 
     @SerializedName("current_role")
-    val currentRole: String,
+    val currentRole: String?,
 
     @SerializedName("main_photo_link")
     val mainPhotoLink: String,
@@ -35,5 +35,5 @@ data class Teammate(
     val socialLinks: List<String>,
 
     @SerializedName("photos")
-    val photos: List<String>
+    val photos: List<String>?
 )

@@ -14,7 +14,7 @@ fun Route.projectsController(projectsRepo: ProjectsRepo) {
             call.respond(projectsRepo.getAll())
         }
 
-        get("/project/one") {
+        get("/one") {
             val id = call.request.queryParameters["id"]?.toLong()
             if (id != null)
                 call.respond(projectsRepo.getById(id))

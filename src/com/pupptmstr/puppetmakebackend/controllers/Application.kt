@@ -54,15 +54,15 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
 
-        route("/api/v1/") {
+        route("") {
 
-            route("") {
-
-                static("/static") {
-                    resources("static")
-                }
-
+            static("/static") {
+                resources("static")
             }
+
+        }
+
+        route("/api/v1/") {
             newsController(newsRepo)
             teammatesController(teammatesRepo)
             projectsController(projectsRepo)
