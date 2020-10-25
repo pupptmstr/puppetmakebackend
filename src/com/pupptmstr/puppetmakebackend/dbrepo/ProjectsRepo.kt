@@ -7,7 +7,7 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 class ProjectsRepo() {
-    val DB_URL = "jdbc:postgresql://127.0.0.1:5432/gorizont"
+    val DB_URL = "jdbc:postgresql://localhost:5432/puppetmakedb"
     val USER = "postgres"
     val PASS = "postgres"
 

@@ -1,5 +1,6 @@
 package com.pupptmstr.puppetmakebackend.controllers
 
+import com.google.gson.FieldNamingPolicy
 import com.pupptmstr.puppetmakebackend.dbrepo.NewsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.ProjectsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.TeammatesRepo
@@ -24,6 +25,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(CORS) {
+        method(HttpMethod.Get)
         method(HttpMethod.Options)
         method(HttpMethod.Put)
         method(HttpMethod.Delete)
@@ -40,6 +42,8 @@ fun Application.module(testing: Boolean = false) {
 
     install(ContentNegotiation) {
         gson {
+            setPrettyPrinting()
+            setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
         }
     }
 
@@ -48,53 +52,19 @@ fun Application.module(testing: Boolean = false) {
     val teammatesRepo = TeammatesRepo()
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
 
-        // Static feature. Try to access `/static/ktor_logo.svg`
-        static("/static") {
-            resources("static")
-        }
+        route("/api/v1/") {
 
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
-        }
+            route("") {
 
-        get("/news") {
-            call.respond(newsRepo.getAll())
-        }
+                static("/static") {
+                    resources("static")
+                }
 
-        get("/projects") {
-            call.respond(projectsRepo.getAll())
-        }
-
-        get("/teammate") {
-            call.respond(teammatesRepo.getAll())
-        }
-
-        get("/news/one") {
-            val id = call.request.queryParameters["id"]?.toLong()
-            if (id != null)
-                call.respond(newsRepo.getById(id))
-            else
-                call.respond(HttpStatusCode.BadRequest)
-        }
-
-        get("/project/one") {
-            val id = call.request.queryParameters["id"]?.toLong()
-            if (id != null)
-                call.respond(projectsRepo.getById(id))
-            else
-                call.respond(HttpStatusCode.BadRequest)
-        }
-
-        get("/teammate/one") {
-            val id = call.request.queryParameters["id"]?.toLong()
-            if (id != null)
-                call.respond(teammatesRepo.getById(id))
-            else
-                call.respond(HttpStatusCode.BadRequest)
+            }
+            newsController(newsRepo)
+            teammatesController(teammatesRepo)
+            projectsController(projectsRepo)
         }
     }
 }

@@ -9,7 +9,7 @@ import java.sql.SQLException
 import java.time.LocalDate
 
 class NewsRepo {
-    val DB_URL = "jdbc:postgresql://127.0.0.1:5432/gorizont"
+    val DB_URL = "jdbc:postgresql://localhost:5432/puppetmakedb"
     val USER = "postgres"
     val PASS = "postgres"
 
@@ -20,9 +20,9 @@ class NewsRepo {
             val statement = connection.createStatement()
             val result = mutableListOf<Project>()
             try {
-                val resSet: ResultSet = statement.executeQuery("SELECT * FROM projects;")
+                val resSet: ResultSet = statement.executeQuery("SELECT * FROM news;")
                 while (resSet.next()) {
-                    TODO("")
+                    break
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
