@@ -5,20 +5,20 @@ import java.time.LocalDate
 
 data class News(
         @SerializedName("id")
-        val id: Long,
+        var id: Long,
 
         @SerializedName("header")
-        val header: String,
+        var header: String,
 
         @SerializedName("content")
-        val content: String,
+        var content: String,
 
         @SerializedName("create_at")
-        val createAt: LocalDate,
+        var createAt: LocalDate,
 
         @SerializedName("delete_at")
-        val deleteAt: LocalDate,
+        var deleteAt: LocalDate? = null,
 
         @SerializedName("main_image_link")
-        val mainImageLink: String
+        var mainImageLink: String
 )

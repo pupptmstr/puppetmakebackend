@@ -10,7 +10,7 @@ data class Project (
     val description: String,
 
     @SerializedName("genres")
-    val genres: List<String>,
+    val genres: List<String>?,
 
     @SerializedName("project_name")
     val projectName: String,

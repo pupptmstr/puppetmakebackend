@@ -44,6 +44,7 @@ fun Application.module(testing: Boolean = false) {
         gson {
             setPrettyPrinting()
             setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+            serializeNulls()
         }
     }
 

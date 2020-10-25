@@ -1,40 +1,77 @@
 package com.pupptmstr.puppetmakebackend.dbrepo
 
+import com.pupptmstr.puppetmakebackend.Utils
 import com.pupptmstr.puppetmakebackend.models.News
 import com.pupptmstr.puppetmakebackend.models.Project
-import java.lang.Exception
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.time.LocalDate
+import java.util.*
 
 class NewsRepo {
     val DB_URL = "jdbc:postgresql://localhost:5432/puppetmakedb"
     val USER = "postgres"
     val PASS = "postgres"
+    val utils = Utils()
 
-    fun getAll(): Array<News>{
+    fun getAll(): Array<News> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
             val statement = connection.createStatement()
-            val result = mutableListOf<Project>()
+            val result = mutableListOf<News>()
             try {
                 val resSet: ResultSet = statement.executeQuery("SELECT * FROM news;")
                 while (resSet.next()) {
-                    break
+                    result.add(
+                        News(
+                            resSet.getLong("id"),
+                            resSet.getString("header"),
+                            resSet.getString("content"),
+                            utils.getLocalDateFromString(resSet.getString("create_at"))!!,
+                            utils.getLocalDateFromString(resSet.getString("delete_at")),
+                            resSet.getString("main_image_link")
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            return result.toTypedArray()
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()
         }
-        return arrayOf(News(0, "", "", LocalDate.now(), LocalDate.now(), ""))
     }
 
     fun getById(id: Long): News {
-        return News(0, "", "", LocalDate.now(), LocalDate.now(), "")
+        try {
+            Class.forName("org.postgresql.Driver")
+            val connection = DriverManager.getConnection(DB_URL, USER, PASS)
+            val statement = connection.createStatement()
+            val result = mutableListOf<News>()
+            try {
+                val resSet: ResultSet = statement.executeQuery("SELECT * FROM news WHERE id=${id};")
+                if (resSet.next()) {
+                    result.add(
+                        News(
+                            resSet.getLong("id"),
+                            resSet.getString("header"),
+                            resSet.getString("content"),
+                            utils.getLocalDateFromString(resSet.getString("create_at"))!!,
+                            utils.getLocalDateFromString(resSet.getString("delete_at")),
+                            resSet.getString("main_image_link")
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return result[0]
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            throw SQLException()
+        }
     }
 }
