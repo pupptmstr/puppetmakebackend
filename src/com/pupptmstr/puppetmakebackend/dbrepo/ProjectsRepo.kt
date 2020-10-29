@@ -3,6 +3,7 @@ package com.pupptmstr.puppetmakebackend.dbrepo
 import com.pupptmstr.puppetmakebackend.Utils
 import com.pupptmstr.puppetmakebackend.models.News
 import com.pupptmstr.puppetmakebackend.models.Project
+import com.pupptmstr.puppetmakebackend.models.ResponseModel
 import java.lang.Exception
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -14,7 +15,7 @@ class ProjectsRepo() {
     val PASS = "postgres"
     val utils = Utils()
 
-    fun getAll(): Array<Project> {
+    fun getAll(): ResponseModel<Project> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -39,7 +40,7 @@ class ProjectsRepo() {
                 e.printStackTrace()
                 throw e
             }
-            return result.toTypedArray()
+            return ResponseModel(result)
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()

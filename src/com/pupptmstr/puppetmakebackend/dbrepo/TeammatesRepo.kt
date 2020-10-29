@@ -2,6 +2,7 @@ package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
 import com.pupptmstr.puppetmakebackend.models.Project
+import com.pupptmstr.puppetmakebackend.models.ResponseModel
 import com.pupptmstr.puppetmakebackend.models.Teammate
 import org.postgresql.util.PSQLException
 import java.lang.Exception
@@ -17,7 +18,7 @@ class TeammatesRepo {
     val PASS = "postgres"
     val utils = Utils()
 
-    fun getAll(): Array<Teammate>{
+    fun getAll(): ResponseModel<Teammate>{
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -56,7 +57,7 @@ class TeammatesRepo {
                 e.printStackTrace()
                 throw e
             }
-            return result.toTypedArray()
+            return ResponseModel(result)
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()
