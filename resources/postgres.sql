@@ -35,7 +35,7 @@ CREATE TABLE projects
 );
 
 INSERT INTO projects(project_name, description, logo_img_link, tech_specs, genres, status)
-VALUES ('Sora`s story', 'Моя первая игра', 'localhost:8080/static/project-sora-logo.png', 'Минимальные системные требования 30 кадров в секунду:
+VALUES ('Sora`s story', 'Моя первая игра', 'localhost:8080/static/project-sora-logo.jpg', 'Минимальные системные требования 30 кадров в секунду:
 
     Процессор: Intel Core 2 Duo E8400
     Видеокарта: Intel HD 3000

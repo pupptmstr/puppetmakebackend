@@ -64,7 +64,7 @@ class TeammatesRepo {
         }
     }
 
-    fun getById(id: Long): Teammate {
+    fun getById(id: Long): ResponseModel<Teammate> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -76,7 +76,7 @@ class TeammatesRepo {
                     var currentRole: String? = null
                     var photos: List<String>? = null
                     try {
-                        currentRole = resSet.getString("current_role")
+                        currentRole = resSet.getString("curr_role")
                         photos = utils.getListFromSqlArray(resSet.getArray("photos"))
                     }catch (e: PSQLException) {
                         //who cares?
@@ -103,7 +103,7 @@ class TeammatesRepo {
                 e.printStackTrace()
                 throw e
             }
-            return result[0]
+            return ResponseModel(result)
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()

@@ -43,7 +43,7 @@ class NewsRepo {
         }
     }
 
-    fun getById(id: Long): News {
+    fun getById(id: Long): ResponseModel<News> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -66,7 +66,7 @@ class NewsRepo {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            return result[0]
+            return ResponseModel(result)
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()

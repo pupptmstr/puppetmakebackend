@@ -47,7 +47,7 @@ class ProjectsRepo() {
         }
     }
 
-    fun getById(id: Long): Project {
+    fun getById(id: Long): ResponseModel<Project> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -72,7 +72,7 @@ class ProjectsRepo() {
                 e.printStackTrace()
                 throw e
             }
-            return result[0]
+            return ResponseModel(result)
         } catch (e: SQLException) {
             e.printStackTrace()
             throw SQLException()
