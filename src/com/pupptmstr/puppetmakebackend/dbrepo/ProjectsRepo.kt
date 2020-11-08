@@ -4,6 +4,7 @@ import com.pupptmstr.puppetmakebackend.Utils
 import com.pupptmstr.puppetmakebackend.models.News
 import com.pupptmstr.puppetmakebackend.models.Project
 import com.pupptmstr.puppetmakebackend.models.ResponseModel
+import com.pupptmstr.puppetmakebackend.models.Teammate
 import java.lang.Exception
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -15,7 +16,9 @@ class ProjectsRepo() {
     val PASS = "postgres"
     val utils = Utils()
 
-    fun getAll(): ResponseModel<Project> {
+    val data = mutableSetOf<Project>()
+
+    private fun getAllFromDB(): ResponseModel<Project> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -47,35 +50,23 @@ class ProjectsRepo() {
         }
     }
 
+
+    fun update() {
+        val responseModel = getAllFromDB()
+        data.addAll(responseModel.ArrayData)
+    }
+
+    fun getAll(): ResponseModel<Project> {
+        return ResponseModel(data.toList())
+    }
+
     fun getById(id: Long): ResponseModel<Project> {
-        try {
-            Class.forName("org.postgresql.Driver")
-            val connection = DriverManager.getConnection(DB_URL, USER, PASS)
-            val statement = connection.createStatement()
-            val result = mutableListOf<Project>()
-            try {
-                val resSet: ResultSet = statement.executeQuery("SELECT * FROM projects WHERE id=${id};")
-                if (resSet.next()) {
-                    result.add(
-                        Project(
-                            resSet.getLong("id"),
-                            resSet.getString("description"),
-                            utils.getListFromSqlArray(resSet.getArray("genres")),
-                            resSet.getString("project_name"),
-                            resSet.getBoolean("status"),
-                            resSet.getString("tech_specs"),
-                            resSet.getString("logo_img_link")
-                        )
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw e
+        val result = mutableListOf<Project>()
+        for (proj: Project in data) {
+            if (proj.id == id) {
+                result.add(proj)
             }
-            return ResponseModel(result)
-        } catch (e: SQLException) {
-            e.printStackTrace()
-            throw SQLException()
         }
+        return ResponseModel(result)
     }
 }

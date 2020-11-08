@@ -19,6 +19,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -51,6 +52,10 @@ fun Application.module(testing: Boolean = false) {
     val newsRepo = NewsRepo()
     val projectsRepo = ProjectsRepo()
     val teammatesRepo = TeammatesRepo()
+    newsRepo.update()
+    teammatesRepo.update()
+    projectsRepo.update()
+
 
     routing {
 
@@ -66,6 +71,12 @@ fun Application.module(testing: Boolean = false) {
             newsController(newsRepo)
             teammatesController(teammatesRepo)
             projectsController(projectsRepo)
+        }
+
+        route("/update") {
+            newsRepo.update()
+            teammatesRepo.update()
+            projectsRepo.update()
         }
     }
 }
