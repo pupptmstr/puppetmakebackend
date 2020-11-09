@@ -8,7 +8,7 @@ import io.ktor.routing.*
 
 fun Route.teammatesController(teammatesRepo: TeammatesRepo) {
 
-    route("teammates/") {
+    route("/teammates") {
 
         get("/all") {
             call.respond(teammatesRepo.getAll())

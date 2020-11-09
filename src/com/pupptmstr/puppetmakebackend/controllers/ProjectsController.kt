@@ -8,7 +8,7 @@ import io.ktor.routing.*
 
 fun Route.projectsController(projectsRepo: ProjectsRepo) {
 
-    route("projects/") {
+    route("/projects") {
 
         get("/all") {
             call.respond(projectsRepo.getAll())

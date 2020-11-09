@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy
 import com.pupptmstr.puppetmakebackend.dbrepo.NewsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.ProjectsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.TeammatesRepo
+import com.pupptmstr.puppetmakebackend.models.searchEngine
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -13,6 +14,7 @@ import io.ktor.http.content.*
 import io.ktor.features.*
 import org.slf4j.event.*
 import io.ktor.gson.*
+import java.io.File
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -32,7 +34,7 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
         header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
+        header("CORS-CustomHeader")
         allowCredentials = true
         anyHost()
     }
@@ -62,15 +64,18 @@ fun Application.module(testing: Boolean = false) {
         route("") {
 
             static("/static") {
+                staticRootFolder = File("static")
+                files(staticRootFolder!!.absolutePath)
                 resources("static")
             }
 
         }
 
-        route("/api/v1/") {
+        route("/api/v1") {
             newsController(newsRepo)
             teammatesController(teammatesRepo)
             projectsController(projectsRepo)
+            searchEngine(newsRepo, teammatesRepo, projectsRepo)
         }
 
         route("/update") {

@@ -8,7 +8,7 @@ import io.ktor.routing.*
 
 fun Route.newsController(newsRepo: NewsRepo) {
 
-    route("news/") {
+    route("/news") {
 
         get("/all") {
             call.respond(newsRepo.getAll())
