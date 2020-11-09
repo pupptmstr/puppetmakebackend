@@ -1,9 +1,8 @@
 package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
-import com.pupptmstr.puppetmakebackend.models.News
-import com.pupptmstr.puppetmakebackend.models.ResponseModel
-import com.pupptmstr.puppetmakebackend.models.Teammate
+import com.pupptmstr.puppetmakebackend.models.dbmodels.News
+import com.pupptmstr.puppetmakebackend.models.responses.ResponseModel
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
@@ -60,6 +59,16 @@ class NewsRepo {
         for (news: News in data) {
             if (news.id == id) {
                 result.add(news)
+            }
+        }
+        return ResponseModel(result)
+    }
+
+    fun search(query: String) : ResponseModel<News> {
+        val result = mutableListOf<News>()
+        data.forEach {
+            if (it.header.toLowerCase().contains(query.toLowerCase())) {
+                result.add(it)
             }
         }
         return ResponseModel(result)

@@ -4,16 +4,14 @@ import com.google.gson.FieldNamingPolicy
 import com.pupptmstr.puppetmakebackend.dbrepo.NewsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.ProjectsRepo
 import com.pupptmstr.puppetmakebackend.dbrepo.TeammatesRepo
-import com.pupptmstr.puppetmakebackend.models.searchEngine
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
+import io.ktor.features.*
+import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.gson.*
+import io.ktor.request.*
+import io.ktor.routing.*
+import org.slf4j.event.Level
 import java.io.File
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)

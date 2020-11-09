@@ -1,4 +1,4 @@
-package com.pupptmstr.puppetmakebackend.models
+package com.pupptmstr.puppetmakebackend.models.dbmodels
 
 import com.google.gson.annotations.SerializedName
 

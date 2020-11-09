@@ -1,10 +1,9 @@
 package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
-import com.pupptmstr.puppetmakebackend.models.News
-import com.pupptmstr.puppetmakebackend.models.Project
-import com.pupptmstr.puppetmakebackend.models.ResponseModel
-import com.pupptmstr.puppetmakebackend.models.Teammate
+import com.pupptmstr.puppetmakebackend.models.dbmodels.News
+import com.pupptmstr.puppetmakebackend.models.dbmodels.Project
+import com.pupptmstr.puppetmakebackend.models.responses.ResponseModel
 import java.lang.Exception
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -65,6 +64,16 @@ class ProjectsRepo() {
         for (proj: Project in data) {
             if (proj.id == id) {
                 result.add(proj)
+            }
+        }
+        return ResponseModel(result)
+    }
+
+    fun search(query: String) : ResponseModel<Project> {
+        val result = mutableListOf<Project>()
+        data.forEach {
+            if (it.projectName.toLowerCase().contains(query.toLowerCase())) {
+                result.add(it)
             }
         }
         return ResponseModel(result)

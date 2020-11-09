@@ -1,17 +1,15 @@
 package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
-import com.pupptmstr.puppetmakebackend.models.News
-import com.pupptmstr.puppetmakebackend.models.Project
-import com.pupptmstr.puppetmakebackend.models.ResponseModel
-import com.pupptmstr.puppetmakebackend.models.Teammate
+import com.pupptmstr.puppetmakebackend.models.dbmodels.News
+import com.pupptmstr.puppetmakebackend.models.responses.ResponseModel
+import com.pupptmstr.puppetmakebackend.models.dbmodels.Teammate
 import org.postgresql.util.PSQLException
 import java.lang.Exception
 import java.lang.NullPointerException
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.time.LocalDate
 
 class TeammatesRepo {
     val DB_URL = "jdbc:postgresql://localhost:5432/puppetmakedb"
@@ -21,7 +19,7 @@ class TeammatesRepo {
 
     val data = mutableSetOf<Teammate>()
 
-    private fun getAllFromDB(): ResponseModel<Teammate>{
+    private fun getAllFromDB(): ResponseModel<Teammate> {
         try {
             Class.forName("org.postgresql.Driver")
             val connection = DriverManager.getConnection(DB_URL, USER, PASS)
@@ -81,6 +79,17 @@ class TeammatesRepo {
         for (teammate: Teammate in data) {
             if (teammate.id == id) {
                 result.add(teammate)
+            }
+        }
+        return ResponseModel(result)
+    }
+
+    fun search(query: String) : ResponseModel<Teammate> {
+        val result = mutableListOf<Teammate>()
+        data.forEach {
+            val fullName = "${it.firstName} \"${it.nickname}\" ${it.surname}"
+            if (fullName.toLowerCase().contains(query.toLowerCase())) {
+                result.add(it)
             }
         }
         return ResponseModel(result)
