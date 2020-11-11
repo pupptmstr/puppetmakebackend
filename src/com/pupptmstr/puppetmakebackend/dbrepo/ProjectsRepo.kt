@@ -1,10 +1,8 @@
 package com.pupptmstr.puppetmakebackend.dbrepo
 
 import com.pupptmstr.puppetmakebackend.Utils
-import com.pupptmstr.puppetmakebackend.models.dbmodels.News
 import com.pupptmstr.puppetmakebackend.models.dbmodels.Project
 import com.pupptmstr.puppetmakebackend.models.responses.ResponseModel
-import java.lang.Exception
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
