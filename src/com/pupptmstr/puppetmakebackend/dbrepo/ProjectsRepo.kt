@@ -59,6 +59,24 @@ class ProjectsRepo() {
         return ResponseModel(data.toList())
     }
 
+    fun getAllDone(): ResponseModel<Project> {
+        return getAllByStatus(true)
+    }
+
+    fun getAllToDo(): ResponseModel<Project> {
+        return getAllByStatus(false)
+    }
+
+    private fun getAllByStatus(status: Boolean): ResponseModel<Project> {
+        val res = mutableListOf<Project>()
+        data.forEach {
+            if (it.status == status) {
+                res.add(it)
+            }
+        }
+        return ResponseModel(res)
+    }
+
     fun getById(id: Long): ResponseModel<Project> {
         val result = mutableListOf<Project>()
         for (proj: Project in data) {

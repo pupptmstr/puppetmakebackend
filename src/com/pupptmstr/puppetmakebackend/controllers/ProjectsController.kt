@@ -10,7 +10,15 @@ fun Route.projectsController(projectsRepo: ProjectsRepo) {
 
     route("/projects") {
 
-        get("/all") {
+        get("/done/all") {
+            call.respond(projectsRepo.getAllDone())
+        }
+
+        get("/todo/all") {
+            call.respond(projectsRepo.getAllToDo())
+        }
+
+        get ("/all"){
             call.respond(projectsRepo.getAll())
         }
 
